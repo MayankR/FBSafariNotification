@@ -1,4 +1,4 @@
-Local Facebook notifications
+Local Facebook notifications on OS X
 
 #FEATURES
 + -Local notification on OS X for Facebook when a Facebook tab is open.

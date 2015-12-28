@@ -1,0 +1,55 @@
+<script>
+document.write("Facebook local notifications.");
+document.write(safari.application.browserWindows);
+var ans=0;
+setInterval(function() {
+	for(i=0;i<safari.application.browserWindows.length;i++)
+	{
+		for(j=0;j<safari.application.browserWindows[i].tabs.length;j++)
+		{
+			t = safari.application.browserWindows[i].tabs[j].title;
+			document.write(t);
+			if(t.indexOf("Facebook") > -1)
+			{
+				document.write(t);
+				// alert(t);
+				var tot = 0;
+				for(k=0;k<t.length;k++)
+				{
+					if(t.charAt(k).charCodeAt(0)>"0".charCodeAt(0) && (t.charAt(k)).charCodeAt(0)<"9".charCodeAt(0))
+					{
+						tot = tot*10 + (t.charAt(k)).charCodeAt(0)-"0".charCodeAt(0);
+					}
+				}
+				document.write("FB "+tot+" "+ans);
+				if(tot != ans)
+				{
+					if(window.Notification.permission == 'default')
+					{
+						window.Notification.requestPermission();
+					}
+					if(window.Notification.permission == 'granted')
+					{
+						if(tot>ans)
+						{
+							var n = new Notification(
+			                    'Check Facebook',
+			                    {
+			                      'body': 'Hey, New Facebook Nitification.',
+			                      'tag' : 'com.mayankrajoria.fbsafarinotification'
+			                    }
+			                );
+			                n.onclick = function () {
+			                	safari.application.browserWindows[i].tabs[j].activate();
+					            this.close();
+					        };
+						}
+					}
+					ans=tot;
+				}
+			}
+		}
+	}
+}, 3000)
+
+</script>
